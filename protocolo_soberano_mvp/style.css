@@ -118,8 +118,15 @@ body {
   margin-top: 0;
 }
 
+.mode-select {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
 .decision-list {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
   margin-top: 1rem;
 }
@@ -148,6 +155,22 @@ body {
 .decision-btn--hard:hover { border-color: var(--danger); }
 .decision-btn--pragmatic:hover { border-color: var(--warn); }
 .decision-btn--conciliatory:hover { border-color: var(--ok); }
+
+.decision-btn--left {
+  border-left: 3px solid var(--danger);
+}
+
+.decision-btn--right {
+  border-right: 3px solid var(--ok);
+}
+
+.decision-hint {
+  margin: 0.7rem 0 0;
+  color: var(--text-1);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
 
 .metric-grid {
   display: grid;
@@ -232,6 +255,10 @@ body {
 
 @media (max-width: 1024px) {
   .ps-main {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-list {
     grid-template-columns: 1fr;
   }
 

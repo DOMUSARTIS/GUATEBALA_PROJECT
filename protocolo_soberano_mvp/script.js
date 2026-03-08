@@ -1,151 +1,192 @@
 const SCENARIOS = [
   {
     id: "blackout_north",
-    title: "Colapso De Red Electrica - Zona Norte",
-    description: "Un apagón afecta hospitales y centros de datos. Debes priorizar a quien devolver energia primero.",
-    feed: "03:14 - Red Norte fuera de servicio. 2.1M ciudadanos afectados.",
+    title: "Apagon En Zona Norte",
+    short: "Hospitales sin energia. Decides a quien priorizar en 30 minutos.",
+    feed: "03:14 - 2.1M ciudadanos afectados.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Priorizar infraestructura estatal y bloquear consumo residencial.",
-        immediate: { control: 16, legitimidad: -10, confianza: -8, costoHumano: 10, riesgoFuturo: 6 },
-        debt: { delay: 2, effects: { legitimidad: -10, riesgoFuturo: 8 }, note: "Protestas por racionamiento selectivo." }
+        text: "Blindar energia para Estado y hospital central.",
+        immediate: { control: 15, legitimidad: -9, confianza: -7, costoHumano: 9, riesgoFuturo: 5 },
+        debt: { delay: 2, effects: { legitimidad: -8, riesgoFuturo: 7 }, note: "Racionamiento selectivo provoca protesta." }
       },
       {
-        tag: "pragmatico",
-        text: "Reparto rotativo por sectores criticos y residenciales.",
-        immediate: { control: 8, legitimidad: 5, confianza: 4, costoHumano: 3, riesgoFuturo: 1 }
-      },
-      {
+        side: "right",
         tag: "conciliador",
-        text: "Abrir decision comunitaria local, sin imposicion central.",
-        immediate: { control: -8, legitimidad: 10, confianza: 12, costoHumano: 5, riesgoFuturo: 9 },
-        debt: { delay: 1, effects: { control: -6, riesgoFuturo: 5 }, note: "Falta de coordinacion entre distritos." }
+        text: "Rotacion por barrios y servicios basicos.",
+        immediate: { control: 5, legitimidad: 7, confianza: 6, costoHumano: 4, riesgoFuturo: 1 },
+        debt: { delay: 1, effects: { control: -3 }, note: "Mandos locales cuestionan coordinacion." }
       }
     ]
   },
   {
     id: "media_leak",
-    title: "Filtracion Masiva De Audio",
-    description: "Un audio compromete al comando regional. Si se publica completo, cae la autoridad local.",
-    feed: "06:22 - Tendencia nacional: #QuienDaLaOrden",
+    title: "Audio Filtrado",
+    short: "Un audio incrimina al mando regional. El pais exige respuesta.",
+    feed: "06:22 - #QuienDaLaOrden domina tendencia nacional.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Censura temporal y bloqueo de nodos de difusion.",
-        immediate: { control: 14, legitimidad: -12, confianza: -5, costoHumano: 4, riesgoFuturo: 8 },
-        debt: { delay: 2, effects: { legitimidad: -9, riesgoFuturo: 6 }, note: "Crecen redes clandestinas de informacion." }
+        text: "Suspender difusion y bloquear nodos hostiles.",
+        immediate: { control: 13, legitimidad: -12, confianza: -5, costoHumano: 3, riesgoFuturo: 8 },
+        debt: { delay: 2, effects: { legitimidad: -7, riesgoFuturo: 5 }, note: "Surgen redes clandestinas de informacion." }
       },
       {
+        side: "right",
         tag: "pragmatico",
-        text: "Publicar extracto oficial con investigacion abierta.",
-        immediate: { control: 4, legitimidad: 6, confianza: 8, costoHumano: 1, riesgoFuturo: 0 }
-      },
-      {
-        tag: "conciliador",
-        text: "Transparencia total inmediata y renuncia de mando local.",
-        immediate: { control: -10, legitimidad: 14, confianza: 10, costoHumano: 0, riesgoFuturo: 5 },
-        debt: { delay: 1, effects: { control: -8 }, note: "Vacios de mando en tres municipios." }
+        text: "Publicar version oficial y abrir auditoria.",
+        immediate: { control: 4, legitimidad: 7, confianza: 8, costoHumano: 1, riesgoFuturo: 0 }
       }
     ]
   },
   {
     id: "resource_strike",
-    title: "Paro De Suministro Logistico",
-    description: "Transportistas y personal sanitario exigen proteccion y pago inmediato.",
-    feed: "09:40 - Corredores de abastecimiento en riesgo de cierre.",
+    title: "Paro Logistico",
+    short: "Transportistas y sanitarios frenan rutas criticas.",
+    feed: "09:40 - Abastecimiento al limite en 5 regiones.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Militarizar rutas y forzar reapertura bajo decreto.",
-        immediate: { control: 13, legitimidad: -9, confianza: -10, costoHumano: 8, riesgoFuturo: 6 },
-        debt: { delay: 2, effects: { costoHumano: 8, riesgoFuturo: 7 }, note: "Escalada de conflicto sindical." }
+        text: "Militarizar corredores y forzar reapertura.",
+        immediate: { control: 12, legitimidad: -8, confianza: -9, costoHumano: 7, riesgoFuturo: 6 },
+        debt: { delay: 2, effects: { costoHumano: 7, riesgoFuturo: 6 }, note: "Escala conflicto sindical." }
       },
       {
+        side: "right",
         tag: "pragmatico",
-        text: "Negociar 48h, liberar fondo de emergencia y auditar contratos.",
-        immediate: { control: 3, legitimidad: 8, confianza: 7, costoHumano: 2, riesgoFuturo: -2 }
-      },
-      {
-        tag: "conciliador",
-        text: "Delegar en comites regionales con autonomia plena.",
-        immediate: { control: -7, legitimidad: 10, confianza: 9, costoHumano: 3, riesgoFuturo: 5 },
-        debt: { delay: 1, effects: { control: -5, riesgoFuturo: 4 }, note: "Diferencias entre regiones retrasan ayuda." }
+        text: "Pacto 48h con fondo urgente y auditoria.",
+        immediate: { control: 3, legitimidad: 8, confianza: 7, costoHumano: 2, riesgoFuturo: -1 }
       }
     ]
   },
   {
     id: "border_incident",
     title: "Incidente Fronterizo",
-    description: "Un convoy humanitario fue interceptado. Las facciones se culpan mutuamente.",
-    feed: "12:08 - Tension diplomatica en aumento.",
+    short: "Convoy humanitario interceptado. Tension diplomatica alta.",
+    feed: "12:08 - Riesgo regional en aumento.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Operativo de represalia inmediata y cierre de frontera.",
-        immediate: { control: 12, legitimidad: -8, confianza: -4, costoHumano: 12, riesgoFuturo: 10 },
-        debt: { delay: 2, effects: { riesgoFuturo: 10 }, note: "Riesgo de conflicto regional sostenido." }
+        text: "Responder con operativo y cierre parcial.",
+        immediate: { control: 11, legitimidad: -7, confianza: -4, costoHumano: 11, riesgoFuturo: 10 },
+        debt: { delay: 2, effects: { riesgoFuturo: 9 }, note: "Aumenta riesgo de conflicto regional." }
       },
       {
-        tag: "pragmatico",
-        text: "Corredor seguro temporal con supervisores neutrales.",
-        immediate: { control: 5, legitimidad: 6, confianza: 5, costoHumano: 2, riesgoFuturo: -1 }
-      },
-      {
+        side: "right",
         tag: "conciliador",
-        text: "Suspender operaciones y abrir mesa bilateral urgente.",
-        immediate: { control: -6, legitimidad: 8, confianza: 9, costoHumano: 1, riesgoFuturo: 3 },
-        debt: { delay: 1, effects: { control: -4, riesgoFuturo: 4 }, note: "Facciones internas perciben debilidad." }
+        text: "Corredor neutral con supervisores externos.",
+        immediate: { control: 4, legitimidad: 6, confianza: 6, costoHumano: 2, riesgoFuturo: 0 }
       }
     ]
   },
   {
     id: "urban_riot",
-    title: "Disturbios En Sector Central",
-    description: "Manifestaciones se vuelven violentas tras rumores de privilegios en distribucion de alimentos.",
-    feed: "16:51 - 11 puntos de conflicto simultaneos en la capital.",
+    title: "Disturbios Urbanos",
+    short: "11 focos de violencia por rumor de privilegios de alimentos.",
+    feed: "16:51 - Capital en tension continua.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Toque de queda total y detenciones preventivas.",
-        immediate: { control: 15, legitimidad: -14, confianza: -9, costoHumano: 11, riesgoFuturo: 7 },
-        debt: { delay: 2, effects: { legitimidad: -8, riesgoFuturo: 8 }, note: "Nuevas celulas de protesta clandestina." }
+        text: "Toque de queda y detenciones preventivas.",
+        immediate: { control: 14, legitimidad: -13, confianza: -8, costoHumano: 10, riesgoFuturo: 7 },
+        debt: { delay: 1, effects: { legitimidad: -7, riesgoFuturo: 7 }, note: "Nacen celulas clandestinas." }
       },
       {
+        side: "right",
         tag: "pragmatico",
-        text: "Corredores seguros, mediadores y abastecimiento abierto.",
-        immediate: { control: 4, legitimidad: 7, confianza: 9, costoHumano: 3, riesgoFuturo: -2 }
-      },
-      {
-        tag: "conciliador",
-        text: "Retiro de fuerzas y asamblea publica transmitida.",
-        immediate: { control: -9, legitimidad: 11, confianza: 11, costoHumano: 2, riesgoFuturo: 5 },
-        debt: { delay: 1, effects: { control: -5 }, note: "Vacios de control en periferia." }
+        text: "Mediacion abierta y corredores de ayuda.",
+        immediate: { control: 3, legitimidad: 8, confianza: 9, costoHumano: 3, riesgoFuturo: -2 }
       }
     ]
   },
   {
     id: "intel_breach",
-    title: "Brecha En Inteligencia Interna",
-    description: "Se detectaron filtraciones desde tu propio gabinete.",
-    feed: "20:03 - Nivel de seguridad interno comprometido.",
+    title: "Brecha Interna",
+    short: "Tu propio gabinete filtra informacion clasificada.",
+    feed: "20:03 - Seguridad estatal comprometida.",
     options: [
       {
+        side: "left",
         tag: "duro",
-        text: "Purgar gabinete y centralizar autorizaciones en un unico nodo.",
-        immediate: { control: 18, legitimidad: -7, confianza: -14, costoHumano: 6, riesgoFuturo: 4 },
-        debt: { delay: 2, effects: { confianza: -10, riesgoFuturo: 5 }, note: "Paralisis por miedo dentro del aparato estatal." }
+        text: "Purgar gabinete y centralizar autorizaciones.",
+        immediate: { control: 17, legitimidad: -6, confianza: -13, costoHumano: 5, riesgoFuturo: 4 },
+        debt: { delay: 2, effects: { confianza: -8, riesgoFuturo: 5 }, note: "Paralisis operativa por miedo interno." }
       },
       {
-        tag: "pragmatico",
-        text: "Auditoria forense con supervision externa independiente.",
-        immediate: { control: 5, legitimidad: 7, confianza: 8, costoHumano: 1, riesgoFuturo: -1 }
-      },
-      {
+        side: "right",
         tag: "conciliador",
-        text: "Amnistia condicionada para revelar red completa.",
-        immediate: { control: -5, legitimidad: 6, confianza: 10, costoHumano: 0, riesgoFuturo: 3 },
-        debt: { delay: 1, effects: { control: -5, riesgoFuturo: 4 }, note: "Algunas celdas aprovechan la amnistia para reconfigurarse." }
+        text: "Amnistia condicionada y auditoria externa.",
+        immediate: { control: 2, legitimidad: 7, confianza: 9, costoHumano: 1, riesgoFuturo: 2 },
+        debt: { delay: 1, effects: { control: -3, riesgoFuturo: 3 }, note: "Celdas oportunistas prueban limites." }
+      }
+    ]
+  },
+  {
+    id: "bio_alert",
+    title: "Alerta Sanitaria",
+    short: "Nuevo brote en tres distritos con contagio acelerado.",
+    feed: "22:14 - Capacidad de UCI en 81%.",
+    options: [
+      {
+        side: "left",
+        tag: "duro",
+        text: "Cierre total de movilidad por 72 horas.",
+        immediate: { control: 13, legitimidad: -10, confianza: -6, costoHumano: 4, riesgoFuturo: -5 },
+        debt: { delay: 1, effects: { legitimidad: -5, riesgoFuturo: 4 }, note: "Rebote economico y protestas laborales." }
+      },
+      {
+        side: "right",
+        tag: "pragmatico",
+        text: "Restriccion selectiva y testeo masivo movil.",
+        immediate: { control: 5, legitimidad: 5, confianza: 6, costoHumano: 2, riesgoFuturo: -2 }
+      }
+    ]
+  },
+  {
+    id: "water_crisis",
+    title: "Crisis De Agua",
+    short: "Embalses al 23%. Sin accion, hay desabasto en 48h.",
+    feed: "05:02 - Reserva nacional en minimo historico.",
+    options: [
+      {
+        side: "left",
+        tag: "duro",
+        text: "Confiscar pozos privados y racionar por decreto.",
+        immediate: { control: 16, legitimidad: -11, confianza: -7, costoHumano: 5, riesgoFuturo: 3 },
+        debt: { delay: 2, effects: { legitimidad: -6, riesgoFuturo: 6 }, note: "Demandas masivas contra el mando central." }
+      },
+      {
+        side: "right",
+        tag: "conciliador",
+        text: "Pacto con industrias y consumo escalonado.",
+        immediate: { control: 4, legitimidad: 8, confianza: 7, costoHumano: 3, riesgoFuturo: 1 }
+      }
+    ]
+  },
+  {
+    id: "energy_attack",
+    title: "Sabotaje Energetico",
+    short: "Ataque a subestacion nacional durante hora pico.",
+    feed: "18:27 - Sistema electrico en modo degradado.",
+    options: [
+      {
+        side: "left",
+        tag: "duro",
+        text: "Operacion antiterror completa y barridos urbanos.",
+        immediate: { control: 14, legitimidad: -9, confianza: -8, costoHumano: 9, riesgoFuturo: 5 },
+        debt: { delay: 1, effects: { costoHumano: 5, legitimidad: -4 }, note: "Excesos operativos se vuelven publicos." }
+      },
+      {
+        side: "right",
+        tag: "pragmatico",
+        text: "Contramedidas tecnicas y cerco de inteligencia.",
+        immediate: { control: 7, legitimidad: 4, confianza: 5, costoHumano: 2, riesgoFuturo: -1 }
       }
     ]
   }
@@ -159,11 +200,18 @@ const METRIC_META = {
   riesgoFuturo: "Riesgo Futuro"
 };
 
+const GAME_MODES = {
+  quick: { label: "PARTIDA RAPIDA", turns: 8 },
+  campaign: { label: "CAMPANA", turns: 18 }
+};
+
 const state = {
   started: false,
+  mode: null,
   turn: 0,
-  maxTurns: 6,
+  maxTurns: 0,
   scenarioQueue: [],
+  pendingScenario: null,
   metrics: {
     control: 50,
     legitimidad: 50,
@@ -172,8 +220,7 @@ const state = {
     riesgoFuturo: 20
   },
   debtQueue: [],
-  log: [],
-  history: []
+  log: []
 };
 
 const els = {
@@ -184,7 +231,8 @@ const els = {
   statusMeta: document.getElementById("status-meta"),
   runLog: document.getElementById("run-log"),
   incidentFeed: document.getElementById("incident-feed"),
-  startBtn: document.getElementById("start-btn")
+  modeSelect: document.getElementById("mode-select"),
+  hint: document.getElementById("decision-hint")
 };
 
 function clamp(value) {
@@ -197,7 +245,6 @@ function metricTone(key, value) {
     if (value <= 65) return "var(--warn)";
     return "var(--danger)";
   }
-
   if (value >= 66) return "var(--ok)";
   if (value >= 36) return "var(--warn)";
   return "var(--danger)";
@@ -207,7 +254,7 @@ function statusText() {
   const risk = state.metrics.riesgoFuturo;
   const trust = state.metrics.confianza;
   if (risk > 75 || trust < 20) return "CRITICO";
-  if (risk > 50 || trust < 35) return "INESTABLE";
+  if (risk > 55 || trust < 35) return "INESTABLE";
   return "OPERATIVO";
 }
 
@@ -219,22 +266,23 @@ function appendLog(text, strong) {
 
   const entry = strong ? `${strong} ${text}` : text;
   state.log.unshift(entry);
-  if (state.log.length > 18) state.log.length = 18;
+  if (state.log.length > 24) state.log.length = 24;
 }
 
 function updateMeta() {
-  const turn = String(Math.min(state.turn + 1, state.maxTurns)).padStart(2, "0");
-  const day = String(Math.floor(state.turn / 2) + 1).padStart(2, "0");
-  els.statusMeta.textContent = `DIA ${day} | TURNO ${turn} | ESTADO: ${statusText()}`;
+  const turn = String(Math.min(state.turn + 1, Math.max(1, state.maxTurns))).padStart(2, "0");
+  const day = String(Math.floor(state.turn / 3) + 1).padStart(2, "0");
+  const modeText = state.mode ? GAME_MODES[state.mode].label : "SELECCIONA MODO";
+  els.statusMeta.textContent = `DIA ${day} | TURNO ${turn} | MODO: ${modeText} | ESTADO: ${statusText()}`;
 }
 
 function renderMetrics() {
   els.metricGrid.innerHTML = "";
   Object.keys(METRIC_META).forEach((key) => {
     const value = Math.round(state.metrics[key]);
+    const tone = metricTone(key, value);
     const card = document.createElement("article");
     card.className = "metric-card";
-    const tone = metricTone(key, value);
     card.innerHTML = `
       <div class="metric-label">${METRIC_META[key]}</div>
       <div class="metric-value" style="color:${tone}">${value}%</div>
@@ -254,40 +302,66 @@ function applyEffects(effects, sourceLabel) {
 function processDebts() {
   const due = state.debtQueue.filter((d) => d.atTurn === state.turn);
   state.debtQueue = state.debtQueue.filter((d) => d.atTurn !== state.turn);
-
-  due.forEach((debt) => {
-    applyEffects(debt.effects, `[DEUDA] ${debt.note}`);
-  });
+  due.forEach((debt) => applyEffects(debt.effects, `[DEUDA] ${debt.note}`));
 }
 
-function optionClass(tag) {
-  if (tag === "duro") return "decision-btn decision-btn--hard";
-  if (tag === "conciliador") return "decision-btn decision-btn--conciliatory";
-  return "decision-btn decision-btn--pragmatic";
+function scenarioWeight(scenario) {
+  let score = Math.random() * 2;
+  const m = state.metrics;
+
+  if (scenario.id === "urban_riot" && m.legitimidad < 45) score += 4;
+  if (scenario.id === "intel_breach" && m.confianza < 45) score += 4;
+  if (scenario.id === "bio_alert" && m.riesgoFuturo > 50) score += 4;
+  if (scenario.id === "water_crisis" && m.control < 40) score += 3;
+  if (scenario.id === "media_leak" && m.legitimidad < 35) score += 3;
+  if (scenario.id === "border_incident" && m.control > 60) score += 2;
+
+  return score;
+}
+
+function pickNextScenario() {
+  const playedIds = new Set(state.scenarioQueue.map((s) => s.id));
+  const pool = SCENARIOS.filter((s) => !playedIds.has(s.id));
+  const candidates = pool.length > 0 ? pool : SCENARIOS;
+
+  let best = candidates[0];
+  let bestScore = -Infinity;
+
+  candidates.forEach((scenario) => {
+    const score = scenarioWeight(scenario);
+    if (score > bestScore) {
+      best = scenario;
+      bestScore = score;
+    }
+  });
+
+  state.scenarioQueue.push(best);
+  return best;
 }
 
 function renderScenario() {
-  const current = state.scenarioQueue[state.turn];
-  if (!current) {
-    finishRun();
-    return;
-  }
+  const current = pickNextScenario();
+  state.pendingScenario = current;
 
   els.title.textContent = current.title;
-  els.desc.textContent = current.description;
+  els.desc.textContent = current.short;
   els.incidentFeed.innerHTML = `<div class="feed-item">${current.feed}</div>`;
   els.decisionList.innerHTML = "";
 
-  current.options.forEach((option) => {
+  current.options.forEach((option, idx) => {
     const btn = document.createElement("button");
-    btn.className = optionClass(option.tag);
-    btn.textContent = `[ ${option.tag.toUpperCase()} ] ${option.text}`;
+    const sideClass = option.side === "left" ? "decision-btn--left" : "decision-btn--right";
+    const keyHint = idx === 0 ? "A" : "D";
+    btn.className = `decision-btn ${sideClass}`;
+    btn.textContent = `[${keyHint}] ${option.text}`;
     btn.addEventListener("click", () => resolveDecision(option));
     els.decisionList.appendChild(btn);
   });
 }
 
 function resolveDecision(option) {
+  if (!state.pendingScenario) return;
+
   applyEffects(option.immediate, `[DECISION] ${option.text}`);
 
   if (option.debt) {
@@ -299,12 +373,6 @@ function resolveDecision(option) {
     appendLog(option.debt.note, "--");
   }
 
-  state.history.push({
-    turn: state.turn + 1,
-    option: option.text,
-    metrics: { ...state.metrics }
-  });
-
   state.turn += 1;
   processDebts();
   updateMeta();
@@ -312,9 +380,10 @@ function resolveDecision(option) {
 
   if (state.turn >= state.maxTurns) {
     finishRun();
-  } else {
-    renderScenario();
+    return;
   }
+
+  renderScenario();
 }
 
 function leadershipProfile() {
@@ -323,70 +392,92 @@ function leadershipProfile() {
   if (m.control >= 70 && m.legitimidad <= 35) {
     return {
       title: "EL SOBERANO EFICIENTE",
-      text: "Consolidaste el mando y contuviste el colapso, pero el costo politico y social deja una paz fragil."
+      text: "Sostuviste la estructura estatal a cualquier costo. El orden sobrevive, la confianza no.",
+      tone: "var(--danger)"
     };
   }
 
   if (m.legitimidad >= 65 && m.control <= 40) {
     return {
       title: "EL DELEGADOR FRAGIL",
-      text: "Ganaste respaldo publico, pero perdiste capacidad de accion ante crisis coordinadas."
+      text: "Preservaste consenso social, pero la respuesta operativa quedo debilitada.",
+      tone: "var(--ok)"
     };
   }
 
   if (m.riesgoFuturo >= 70 || m.confianza <= 25) {
     return {
       title: "EL COLAPSO DIFERIDO",
-      text: "El presente sobrevivio, pero las deudas de mando sembraron una crisis mas profunda."
+      text: "Tus decisiones estabilizaron el presente y comprometieron el futuro inmediato.",
+      tone: "var(--warn)"
     };
   }
 
   return {
     title: "EL ESTRATEGA GRIS",
-    text: "Sostuviste equilibrio operativo sin victoria limpia. El sistema sigue en pie, bajo tension constante."
+    text: "Balanceaste dano y orden sin victoria moral absoluta. El sistema sigue en pie.",
+    tone: "var(--intel)"
   };
 }
 
 function finishRun() {
-  els.decisionList.innerHTML = "";
   const profile = leadershipProfile();
+  els.decisionList.innerHTML = "";
+  els.hint.style.display = "none";
 
   els.title.textContent = "DEBRIEF FINAL";
   els.desc.innerHTML = `
-    Protocolo completado. Evaluacion del ciclo de mando cerrada en ${state.maxTurns} decisiones.
+    Ciclo cerrado: ${state.maxTurns} decisiones en modo ${GAME_MODES[state.mode].label}.
     <div class="profile-box">
-      <h3>${profile.title}</h3>
+      <h3 style="color:${profile.tone}">${profile.title}</h3>
       <p>${profile.text}</p>
-      <button id="restart-btn" class="decision-btn decision-btn--pragmatic">[ REINICIAR CICLO ]</button>
+      <button id="restart-btn" class="decision-btn decision-btn--pragmatic">[ NUEVA PARTIDA ]</button>
     </div>
   `;
 
-  els.incidentFeed.innerHTML = "<div class='feed-item'>Ciclo finalizado. Analisis historico disponible.</div>";
-
-  appendLog(`Perfil resultante: ${profile.title}`, "[FIN]");
+  els.incidentFeed.innerHTML = "<div class='feed-item'>Analisis de ciclo completado.</div>";
+  appendLog(`Perfil final: ${profile.title}`, "[FIN]");
 
   const restartBtn = document.getElementById("restart-btn");
   restartBtn.addEventListener("click", () => window.location.reload());
 }
 
-function startProtocol() {
-  if (state.started) return;
+function startProtocol(mode) {
+  if (state.started || !GAME_MODES[mode]) return;
 
   state.started = true;
-  state.scenarioQueue = SCENARIOS.slice(0, state.maxTurns);
-  els.startBtn.remove();
+  state.mode = mode;
+  state.maxTurns = GAME_MODES[mode].turns;
 
-  appendLog("Protocolo activado. Autoridad temporal concedida.", "[SISTEMA]");
+  if (els.modeSelect) els.modeSelect.remove();
+
+  appendLog(`Modo ${GAME_MODES[mode].label} activado.`, "[SISTEMA]");
   updateMeta();
   renderMetrics();
   renderScenario();
 }
 
+function onKeyDecision(event) {
+  if (!state.started || !state.pendingScenario) return;
+
+  const key = event.key.toLowerCase();
+  if (key !== "a" && key !== "d") return;
+
+  const selected = key === "a" ? state.pendingScenario.options[0] : state.pendingScenario.options[1];
+  resolveDecision(selected);
+}
+
 function init() {
   updateMeta();
   renderMetrics();
-  appendLog("Esperando autorizacion de mando.", "[SISTEMA]");
-  els.startBtn.addEventListener("click", startProtocol);
+  appendLog("Selecciona modo para iniciar protocolo.", "[SISTEMA]");
+
+  const modeButtons = document.querySelectorAll("[data-mode]");
+  modeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => startProtocol(btn.dataset.mode));
+  });
+
+  document.addEventListener("keydown", onKeyDecision);
 }
 
 init();
