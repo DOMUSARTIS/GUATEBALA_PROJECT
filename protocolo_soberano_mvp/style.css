@@ -177,6 +177,39 @@ body {
   gap: 0.6rem;
 }
 
+.history-box {
+  margin-top: 1rem;
+  border: 1px solid var(--grid);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.65rem;
+}
+
+.history-title {
+  color: var(--text-1);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.45rem;
+}
+
+.history-content {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.history-item {
+  padding: 0.4rem 0.45rem;
+  border-left: 3px solid var(--intel);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-1);
+  font-size: 0.78rem;
+}
+
+.history-item strong {
+  color: var(--text-0);
+}
+
 .metric-card {
   border: 1px solid var(--grid);
   border-radius: 6px;

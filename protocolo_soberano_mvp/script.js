@@ -205,6 +205,8 @@ const GAME_MODES = {
   campaign: { label: "CAMPANA", turns: 18 }
 };
 
+const STORAGE_KEY = "protocolo_soberano_v1";
+
 const state = {
   started: false,
   mode: null,
@@ -220,7 +222,15 @@ const state = {
     riesgoFuturo: 20
   },
   debtQueue: [],
-  log: []
+  log: [],
+  profile: null,
+  archive: {
+    bestByMode: {
+      quick: null,
+      campaign: null
+    },
+    recentRuns: []
+  }
 };
 
 const els = {
@@ -232,8 +242,88 @@ const els = {
   runLog: document.getElementById("run-log"),
   incidentFeed: document.getElementById("incident-feed"),
   modeSelect: document.getElementById("mode-select"),
-  hint: document.getElementById("decision-hint")
+  hint: document.getElementById("decision-hint"),
+  historyContent: document.getElementById("history-content")
 };
+
+function computeRunScore(metrics) {
+  const stability = (metrics.control + metrics.legitimidad + metrics.confianza) / 3;
+  const damage = (metrics.costoHumano + metrics.riesgoFuturo) / 2;
+  return Math.max(0, Math.round(stability - damage + 40));
+}
+
+function loadArchive() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return;
+
+    if (parsed.bestByMode) {
+      state.archive.bestByMode.quick = parsed.bestByMode.quick || null;
+      state.archive.bestByMode.campaign = parsed.bestByMode.campaign || null;
+    }
+
+    if (Array.isArray(parsed.recentRuns)) {
+      state.archive.recentRuns = parsed.recentRuns.slice(0, 6);
+    }
+  } catch (error) {
+    console.warn("No se pudo cargar archivo de mando", error);
+  }
+}
+
+function saveArchive() {
+  const payload = {
+    bestByMode: state.archive.bestByMode,
+    recentRuns: state.archive.recentRuns.slice(0, 6)
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+function renderArchive() {
+  if (!els.historyContent) return;
+
+  const bestQuick = state.archive.bestByMode.quick;
+  const bestCampaign = state.archive.bestByMode.campaign;
+  const recent = state.archive.recentRuns;
+
+  let html = "";
+  html += `<div class="history-item"><strong>BEST RAPIDA:</strong> ${bestQuick ? `${bestQuick.score} pts | ${bestQuick.profile}` : "SIN REGISTRO"}</div>`;
+  html += `<div class="history-item"><strong>BEST CAMPANA:</strong> ${bestCampaign ? `${bestCampaign.score} pts | ${bestCampaign.profile}` : "SIN REGISTRO"}</div>`;
+
+  if (recent.length === 0) {
+    html += `<div class="history-item"><strong>ULTIMAS:</strong> SIN PARTIDAS AUN</div>`;
+  } else {
+    recent.slice(0, 3).forEach((run) => {
+      html += `<div class="history-item"><strong>${run.modeLabel}</strong> ${run.score} pts | ${run.profile}</div>`;
+    });
+  }
+
+  els.historyContent.innerHTML = html;
+}
+
+function persistRun(profile) {
+  const score = computeRunScore(state.metrics);
+  const run = {
+    mode: state.mode,
+    modeLabel: GAME_MODES[state.mode].label,
+    score,
+    profile: profile.title,
+    endedAt: new Date().toISOString()
+  };
+
+  state.archive.recentRuns.unshift(run);
+  state.archive.recentRuns = state.archive.recentRuns.slice(0, 6);
+
+  const best = state.archive.bestByMode[state.mode];
+  if (!best || run.score > best.score) {
+    state.archive.bestByMode[state.mode] = run;
+  }
+
+  saveArchive();
+  renderArchive();
+  return score;
+}
 
 function clamp(value) {
   return Math.max(0, Math.min(100, value));
@@ -422,14 +512,17 @@ function leadershipProfile() {
 
 function finishRun() {
   const profile = leadershipProfile();
+  state.profile = profile;
   els.decisionList.innerHTML = "";
   els.hint.style.display = "none";
+  const score = persistRun(profile);
 
   els.title.textContent = "DEBRIEF FINAL";
   els.desc.innerHTML = `
     Ciclo cerrado: ${state.maxTurns} decisiones en modo ${GAME_MODES[state.mode].label}.
     <div class="profile-box">
       <h3 style="color:${profile.tone}">${profile.title}</h3>
+      <p><strong>PUNTAJE:</strong> ${score} pts</p>
       <p>${profile.text}</p>
       <button id="restart-btn" class="decision-btn decision-btn--pragmatic">[ NUEVA PARTIDA ]</button>
     </div>
@@ -468,8 +561,10 @@ function onKeyDecision(event) {
 }
 
 function init() {
+  loadArchive();
   updateMeta();
   renderMetrics();
+  renderArchive();
   appendLog("Selecciona modo para iniciar protocolo.", "[SISTEMA]");
 
   const modeButtons = document.querySelectorAll("[data-mode]");
