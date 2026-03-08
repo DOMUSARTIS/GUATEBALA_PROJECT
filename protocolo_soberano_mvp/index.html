@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROTOCOLO SOBERANO - MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ps-app">
+    <header class="ps-header">
+      <div class="ps-header__row">
+        <h1 class="ps-brand">PROTOCOLO SOBERANO</h1>
+        <div class="ps-meta" id="status-meta">DIA 01 | TURNO 01 | ESTADO: OPERATIVO</div>
+      </div>
+    </header>
+
+    <main class="ps-main" id="app-main">
+      <aside class="ps-panel">
+        <span class="ps-kicker">Incidentes</span>
+        <h2 class="ps-title">Registro En Vivo</h2>
+        <div id="incident-feed" class="feed-list"></div>
+      </aside>
+
+      <section class="ps-panel ps-panel--strong">
+        <span class="ps-kicker">Decision Tactica</span>
+        <h2 class="ps-title" id="event-title">PROTOCOLO EN ESPERA</h2>
+        <p id="event-description" class="event-description">
+          Eres el Comandante de Crisis. Activa el protocolo y toma decisiones bajo presion.
+        </p>
+        <div class="decision-list" id="decision-list"></div>
+        <button id="start-btn" class="decision-btn decision-btn--pragmatic">[ INICIAR PROTOCOLO ]</button>
+      </section>
+
+      <aside class="ps-panel">
+        <span class="ps-kicker">Telemetria</span>
+        <h2 class="ps-title">Estado Nacional</h2>
+        <div class="metric-grid" id="metric-grid"></div>
+      </aside>
+    </main>
+
+    <footer class="ps-log" id="log-container">
+      <div class="log-title">Registro de Consecuencias</div>
+      <div id="run-log" class="log-list"></div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
