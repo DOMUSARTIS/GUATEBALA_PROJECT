@@ -1,0 +1,226 @@
+/* =========================================
+   GUATEBALA OS - ESTILO TÁCTICO REALISTA V2
+   ========================================= */
+
+:root {
+    --bg-color: #0a0a0a;
+    /* Colores más desaturados y realistas */
+    --folder-color: #b39a74; 
+    --folder-dark: #8a7355;
+    --paper-white: #e8e4d9;
+    --bond-red: #b30000; /* Rojo sangre más oscuro */
+    --phosphor-green: #16c60c; /* Verde fósforo clásico */
+    --gold-premium: #cfa935; /* Oro metálico */
+    --metal-dark: #2a2a2a;
+}
+
+/* GOD MODE */
+body.god-mode { --phosphor-green: var(--gold-premium); }
+body.god-mode header, body.god-mode .instruction-text, body.god-mode .terminal-text {
+    color: var(--gold-premium); text-shadow: 0 0 15px var(--gold-premium);
+}
+
+body {
+    background-color: var(--bg-color);
+    /* Fondo con viñeta y ruido sutil */
+    background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 80%), url('https://www.transparenttextures.com/patterns/stardust.png');
+    font-family: 'Share Tech Mono', monospace;
+    height: 100vh; overflow: hidden; margin: 0; user-select: none;
+    transition: all 1s ease;
+}
+
+/* UI UTILS */
+.hidden { display: none !important; }
+.hidden-folder { display: none; }
+.blink { animation: blinker 0.8s steps(1) infinite; } /* Parpadeo digital más rudo */
+@keyframes blinker { 50% { opacity: 0; } }
+
+/* SCANLINES MEJORADAS */
+.scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.2) 3px),
+                radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none; z-index: 15000; opacity: 0.4; mix-blend-mode: overlay;
+}
+
+/* BOOT SCREEN */
+#boot-screen {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #000; z-index: 20000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    cursor: pointer;
+    background-image: url('https://www.transparenttextures.com/patterns/noisy-net.png'); /* Ruido digital */
+}
+.terminal-text {
+    font-family: 'VT323', monospace; font-size: 2rem; color: var(--phosphor-green);
+    text-shadow: 0 0 8px var(--phosphor-green); text-align: center; letter-spacing: 2px;
+}
+
+/* INTERFAZ PRINCIPAL */
+#game-interface { opacity: 0; transition: opacity 1s ease; }
+.desk-surface { 
+    height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
+    perspective: 1500px; overflow: hidden; /* Más perspectiva para realismo */
+}
+.card-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+
+/* /// FOLDERS REALISTAS /// */
+.folder {
+    position: absolute; width: 340px; height: 500px;
+    transform-origin: center center; cursor: pointer; will-change: transform;
+}
+
+.folder-cover {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--folder-color);
+    /* TEXTURA DE CARTÓN VIEJO */
+    background-image: url('https://www.transparenttextures.com/patterns/cardboard-flat.png'), linear-gradient(to bottom right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
+    border: 1px solid rgba(0,0,0,0.3); border-radius: 4px;
+    /* Sombras multinivel para profundidad 3D */
+    box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.2), /* Sombra interna */
+        1px 1px 3px rgba(0,0,0,0.3), /* Borde físico */
+        10px 15px 30px rgba(0,0,0,0.4); /* Sombra proyectada */
+    padding: 25px; box-sizing: border-box; z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+/* Al pasar el mouse, la sombra crece (se levanta) */
+.folder:hover .folder-cover {
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.1), 1px 1px 3px rgba(0,0,0,0.3), 20px 30px 50px rgba(0,0,0,0.5);
+}
+
+.secret-folder .folder-cover {
+    background-color: #1a1a1a;
+    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    border: 2px solid var(--gold-premium);
+}
+.secret-folder .tab {
+    background-color: #1a1a1a !important; color: var(--gold-premium) !important;
+    border: 2px solid var(--gold-premium); border-bottom: none;
+    box-shadow: inset 0 0 10px var(--gold-premium);
+}
+
+.folder .tab {
+    position: absolute; top: -32px; left: 0; width: 120px; height: 35px;
+    background-color: var(--folder-color);
+    background-image: url('https://www.transparenttextures.com/patterns/cardboard-flat.png');
+    border-radius: 6px 6px 0 0; display: flex; align-items: center; padding-left: 15px;
+    font-family: 'Special Elite', monospace; color: #222; font-weight: bold;
+    border: 1px solid rgba(0,0,0,0.3); border-bottom: none;
+    box-shadow: inset 0 5px 10px rgba(255,255,255,0.1);
+}
+
+.folder h2 {
+    font-family: 'Special Elite', monospace; font-size: 2rem; color: #111;
+    border-bottom: 4px solid #111; display: inline-block; transform: rotate(-1deg);
+    margin-top: 10px; text-transform: uppercase; letter-spacing: -1px;
+}
+
+.photo-frame {
+    background: #fff; padding: 8px 8px 30px 8px; transform: rotate(-2deg);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3); margin-bottom: 20px; margin-top: 40px; border: 1px solid #ccc;
+}
+.evidence-photo { width: 100%; height: 250px; object-fit: cover; filter: grayscale(100%) sepia(20%) contrast(1.1); }
+
+/* /// HOJA DE PAPEL REALISTA /// */
+.paper-sheet {
+    position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px;
+    background-color: var(--paper-white);
+    /* Textura de papel arrugado */
+    background-image: url('https://www.transparenttextures.com/patterns/crinkle-paper.png');
+    box-shadow: 0 1px 5px rgba(0,0,0,0.2); z-index: 5;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); opacity: 0; pointer-events: none;
+    display: flex; flex-direction: column; padding: 30px;
+    color: #222; font-family: 'Courier Prime', monospace; /* FUENTE DE MAQUINA DE ESCRIBIR */
+}
+
+.folder.extracted .folder-cover { transform: translateY(480px); }
+.folder.extracted .paper-sheet {
+    opacity: 1; pointer-events: all; z-index: 5000;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) !important;
+    width: 500px; height: 75vh; max-height: 800px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8); border: 1px solid #d0cdc5;
+}
+
+.sheet-header { border-bottom: 3px solid #222; margin-bottom: 15px; font-weight: bold; font-size: 1.3rem; display: flex; justify-content: space-between; font-family: 'Special Elite';}
+.sheet-body { flex-grow: 1; font-size: 1.1rem; line-height: 1.5; overflow-y: auto; white-space: pre-line; }
+.sheet-controls { margin-top: 15px; border-top: 3px solid #222; padding-top: 15px; display: flex; gap: 10px; flex-direction: column;}
+.sheet-btn { background: transparent; border: 3px solid #222; color: #222; padding: 12px; cursor: pointer; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-transform: uppercase; font-weight: bold; transition: 0.1s;}
+.sheet-btn:hover { background: #222; color: var(--paper-white); }
+.sheet-close { border-color: var(--bond-red); color: var(--bond-red); }
+.sheet-close:hover { background: var(--bond-red); color: #fff; }
+
+/* HUD */
+header { position: fixed; top: 0; left: 0; width: 100%; padding: 20px; color: var(--phosphor-green); z-index: 100; pointer-events: none; display: flex; justify-content: space-between; box-sizing: border-box; transition: color 1s; text-shadow: 0 0 5px currentColor;}
+.instruction-text { position: fixed; bottom: 20px; width: 100%; text-align: center; color: #888; pointer-events: none; transition: color 1s; letter-spacing: 2px; font-size: 0.9rem;}
+
+/* /// TROLL & MATRIX (Sin cambios mayores) /// */
+.shake-red { animation: violentShakeRed 0.2s infinite; }
+@keyframes violentShakeRed { 0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(-5px, 5px); } 75% { transform: translate(5px, -5px); } 100% { transform: translate(0, 0); } }
+#sentinel-terminal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 12000; display: flex; justify-content: center; align-items: center; }
+.sentinel-window { width: 600px; border: 4px solid var(--bond-red); background: #000; padding: 30px; color: var(--bond-red); font-family: 'VT323', monospace; text-align: center; font-size: 1.8rem; box-shadow: 0 0 40px var(--bond-red); text-shadow: 0 0 10px var(--bond-red);}
+.btn-choice { background: #110000; border: 2px solid var(--bond-red); color: var(--bond-red); font-family: 'VT323', monospace; font-size: 1.5rem; padding: 15px 40px; margin: 15px; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.2s;}
+.btn-choice:hover { background: var(--bond-red); color: #000; box-shadow: 0 0 20px var(--bond-red);}
+#punishment-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; overflow: hidden; }
+#matrix-canvas { position: absolute; top:0; left:0; width:100%; height:100%; opacity: 0.4; }
+.punishment-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-align: center; color: red; font-family: 'VT323', monospace; width: 100%; text-shadow: 0 0 20px red; }
+.punishment-center h1 { font-size: 6rem; margin: 0; animation: violentShakeRed 0.5s infinite; }
+#escape-btn { position: absolute; top: 80%; left: 50%; transform: translate(-50%, -50%); padding: 15px 30px; background: red; color: white; border: 3px solid white; font-family: 'Share Tech Mono', monospace; cursor: crosshair; z-index: 20005; box-shadow: 0 0 20px red; font-weight: bold;}
+#troll-toast { position: absolute; color: yellow; font-family: 'VT323', monospace; font-size: 2rem; pointer-events: none; z-index: 20006; text-shadow: 2px 2px 0 red;}
+.spam-text, .spam-gif { position: absolute; pointer-events: none; z-index: 5; }
+
+/* /// RELOJ TÁCTICO (METAL GEAR STYLE) /// */
+#pause-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+/* Correas con textura de nylon balístico */
+.watch-strap-top, .watch-strap-bottom { width: 160px; height: 50vh; background: #222; position: absolute; left: 50%; transform: translateX(-50%); border-left: 8px solid #111; border-right: 8px solid #111; z-index: 1; background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre-v2.png'); }
+.watch-strap-top { top: 0; } .watch-strap-bottom { bottom: 0; }
+.watch-body { position: relative; z-index: 10; }
+/* Bisel metálico con degradado realista */
+.watch-bezel { 
+    width: 480px; height: 480px; 
+    background: linear-gradient(135deg, #444 0%, #1a1a1a 50%, #333 100%);
+    border-radius: 50%; padding: 20px; 
+    border: 6px solid #000; 
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.8), /* Sombra interna */
+        0 10px 30px rgba(0,0,0,0.8), /* Sombra externa */
+        0 0 0 10px #222; /* Segundo borde metálico */
+    display: flex; justify-content: center; align-items: center;
+}
+/* Pantalla CRT curva */
+.watch-screen { 
+    width: 100%; height: 100%; 
+    background: radial-gradient(circle at center, #003300 0%, #001100 100%); 
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+    position: relative; overflow: hidden; 
+    box-shadow: inset 0 0 50px #000;
+    border: 3px solid #000;
+}
+/* Scanlines y Grid de la pantalla del reloj */
+.watch-screen::after {
+    content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,255,0,0.1) 3px),
+                linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+    background-size: 100% 4px, 20px 20px, 20px 20px;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+.watch-title { border-bottom: 3px solid var(--phosphor-green); display: inline-block; margin-bottom: 25px; font-size: 1.8rem; color: var(--phosphor-green); text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px var(--phosphor-green);}
+.watch-list { list-style: none; padding: 0; text-align: center; }
+.watch-list li { 
+    font-size: 1.4rem; margin: 15px 0; padding: 10px 30px; 
+    background: rgba(0, 50, 0, 0.5); border: 2px solid var(--phosphor-green); color: var(--phosphor-green); 
+    cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px;
+    text-shadow: 0 0 5px var(--phosphor-green);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+.watch-list li:hover { background: var(--phosphor-green); color: #000; box-shadow: 0 0 25px var(--phosphor-green); }
+
+.radar-line { width: 100%; height: 3px; background: linear-gradient(90deg, transparent 50%, var(--phosphor-green) 100%); position: absolute; top: 50%; left: 0; animation: scan 4s linear infinite; pointer-events: none; opacity: 0.7; transform-origin: center;}
+@keyframes scan { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+
+.watch-bars { display: flex; flex-direction: column; gap: 8px; position: absolute; left: 50px; top: 50%; transform: translateY(-50%); }
+.watch-bars .bar { width: 18px; height: 35px; background: #222; border: 2px solid #444; }
+.watch-bars .bar.red { background: #b30000; box-shadow: 0 0 15px #b30000; animation: blinker 0.5s infinite;}
+.watch-bars .bar.blue { background: #0044aa; box-shadow: 0 0 10px #0044aa;}

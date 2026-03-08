@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUATEBALA | OPERATIVE SYSTEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Share+Tech+Mono&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <div class="crt-overlay"></div>
+
+    <div id="boot-screen">
+        <div class="terminal-text">
+            <p>> SYSTEM CHECK: COMPLETE</p>
+            <p>> RECALIBRATING PHYSICS...</p>
+            <p>> GUATEBALA_OS V.23.0 ONLINE</p>
+            <p class="blink" style="margin-top: 20px;">[ CLICK TO INITIALIZE ]</p>
+        </div>
+    </div>
+
+    <div id="sentinel-terminal" class="hidden">
+        <div class="sentinel-window">
+            <div class="sentinel-header">/// ACCESO RESTRINGIDO: NIVEL 5 ///</div>
+            <div class="sentinel-body">
+                <p id="sentinel-text" class="typewriter"></p>
+                <div id="sentinel-options" class="hidden">
+                    <button class="btn-choice glitch-hover" onclick="choiceAlly()">[ TOMAR EL CONTROL ]</button>
+                    <button class="btn-choice" onclick="choiceEnemy()">[ PEDIR PERMISO ]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="punishment-overlay" class="hidden">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="chaos-container">
+            <div class="punishment-center">
+                <h1 class="blink">CRITICAL FAILURE</h1>
+                <p class="error-msg">> ACCESO DENEGADO: MENTALIDAD INCOMPATIBLE.</p>
+                <pre class="ansi-art">
+      ░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄
+      ░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄
+      ░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█
+      ░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░█
+      ░▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░█
+      █▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒█
+      █▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
+      ░█▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█
+                </pre>
+            </div>
+            <button id="escape-btn" class="glitch-btn">REGRESAR AL SISTEMA</button>
+            <div id="troll-toast" class="hidden">¡MUY LENTO! 🤣</div>
+        </div>
+    </div>
+
+    <main id="game-interface" class="hidden">
+        <header>
+            <div class="top-hud">
+                <span>OP: KILLA NOTA</span>
+                <span class="health-indicator">STATUS: ACTIVE</span>
+                <span>LOC: 502-ZONE</span>
+            </div>
+        </header>
+
+        <div class="desk-surface">
+            <div class="card-container" id="card-container">
+                
+                <div class="folder" data-id="1">
+                    <div class="paper-sheet"></div> 
+                    <div class="folder-cover">
+                        <div class="tab">001</div>
+                        <div class="folder-content">
+                            <div class="photo-frame">
+                                <img src="assets/mission_01.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2>M: GENESIS</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder" data-id="2">
+                    <div class="paper-sheet"></div>
+                    <div class="folder-cover">
+                        <div class="tab">002</div>
+                        <div class="folder-content">
+                            <div class="photo-frame">
+                                <img src="assets/mission_02.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2>M: FUEGO</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder" data-id="3">
+                    <div class="paper-sheet"></div>
+                    <div class="folder-cover">
+                        <div class="tab">003</div>
+                        <div class="folder-content">
+                            <div class="photo-frame">
+                                <img src="assets/mission_03.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2>M: NIEBLA</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder" data-id="4">
+                    <div class="paper-sheet"></div>
+                    <div class="folder-cover">
+                        <div class="tab">004</div>
+                        <div class="folder-content">
+                            <div class="photo-frame">
+                                <img src="assets/mission_04.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2>M: ECHO</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder" data-id="5">
+                    <div class="paper-sheet"></div>
+                    <div class="folder-cover">
+                        <div class="tab">005</div>
+                        <div class="folder-content">
+                            <div class="photo-frame">
+                                <img src="assets/mission_05.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2>M: OMEGA</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="folder secret-folder hidden-folder" data-id="6" id="folder-6">
+                    <div class="paper-sheet"></div>
+                    <div class="folder-cover">
+                        <div class="tab">006</div>
+                        <div class="folder-content">
+                            <div class="photo-frame" style="border-color: var(--gold-premium);">
+                                <img src="assets/mission_06.jpg" class="evidence-photo" onerror="this.style.display='none'">
+                            </div>
+                            <h2 style="color: var(--gold-premium); border-color: var(--gold-premium);">M: BONUS</h2>
+                            <div class="stamp gold">UNLOCKED</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="instruction-text"><span class="blink">_</span> [ MOUSE: INSPECT // CLICK: EXTRACT DATA // ESC: PAUSE ]</div>
+    </main>
+
+    <div id="pause-menu" class="hidden">
+        <div class="watch-strap-top"></div>
+        <div class="watch-body">
+            <div class="watch-bezel">
+                <div class="watch-screen">
+                    <div class="radar-line"></div>
+                    <div class="watch-center">
+                        <h3 class="watch-title">PAUSE</h3>
+                        <div class="watch-bars">
+                            <div class="bar red"></div>
+                            <div class="bar yellow"></div>
+                            <div class="bar blue"></div>
+                        </div>
+                        <ul class="watch-list">
+                            <li onclick="togglePause()">RESUME</li>
+                            <li>INVENTORY</li>
+                            <li>INTEL</li>
+                            <li>QUIT</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="watch-strap-bottom"></div>
+    </div>
+
+    <audio id="sfx-boot" src="assets/boot_sequence.mp3"></audio>
+    <audio id="sfx-hover" src="assets/folder_hover.mp3"></audio>
+    <audio id="sfx-open" src="assets/folder_open.mp3"></audio>
+    <audio id="bgm-pause" loop src="assets/pause_loop.mp3"></audio>
+    <audio id="sfx-alert" src="assets/alert_terminal.mp3"></audio>
+    <audio id="sfx-upgrade" src="assets/upgrade.mp3"></audio> 
+    <audio id="sfx-rick" loop src="assets/rick_full.mp3"></audio>
+    <audio id="sfx-glitch" src="assets/glitch_escape.mp3"></audio>
+    <audio id="sfx-slide" src="assets/slide.mp3"></audio>
+    <audio id="track-player"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
